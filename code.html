@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Lyrics Synced Music Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+     #container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        #audio-player {
+            width: 100%;
+            margin-top: 20px;
+	    margin-left: 150px;
+        }
+        #lyrics {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+	#logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #logo {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+	<div id="logo-container">
+		<img id="logo" src="path_of_the_logo_where_you_have_downloaded_it\logo.png" alt="Logo">
+	</div>
+        <h1>Your_music_name</h1>
+        <div id="audio-player">
+            <audio id="audio" controls>
+                <source src="add_your_music_here.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div id="lyrics">
+            <!-- Lyrics will be displayed here -->
+        </div>
+    </div>
+    
+    <script>
+        const lyrics = [
+//Add your lyrics here in the format of { time: 0,text: "Lyrics at 0" },
+//Remember to add comma after each line and also to keep the time format as milliseconds		
+];
+
+        const audio = document.getElementById('audio');
+        const lyricsDiv = document.getElementById('lyrics');
+
+        audio.addEventListener('timeupdate', function() {
+            const currentTime = Math.floor(audio.currentTime * 1000); // Convert to milliseconds
+            let currentLyric = "";
+            for (let i = 0; i < lyrics.length; i++) {
+                if (currentTime >= lyrics[i].time && (!lyrics[i + 1] || currentTime < lyrics[i + 1].time)) {
+                    currentLyric = lyrics[i].text;
+                    break;
+                }
+            }
+            lyricsDiv.innerText = currentLyric;
+        });
+    </script>
+</body>
+</html>
